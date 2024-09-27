@@ -1,4 +1,4 @@
-FROM python:3.11-alpine3.18 AS builder
+FROM python:3.11-alpine AS builder
 COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
 RUN set -x \
   && apk update \
@@ -60,7 +60,7 @@ RUN set -x \
   && rm -rf /root/.local/share/pnpm/store \
   && rm -rf /root/.cache \
   && ulimit -c 0 \
-  && pip3 install requests
+  && pip3 install requests paramiko python-jenkins python-whois kubernetes WorkWeixinRobot
 
 ARG SOURCE_COMMIT
 RUN git clone --depth=1 -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
